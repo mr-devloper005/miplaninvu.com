@@ -55,10 +55,11 @@ const getImageUrl = (post: SitePost, content: ListingContent) => {
 
 const cardStyles = {
   'listing-elevated': {
-    frame: 'rounded-[1.9rem] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)] hover:-translate-y-1 hover:shadow-[0_28px_75px_rgba(15,23,42,0.14)]',
-    muted: 'text-slate-600',
-    title: 'text-slate-950',
-    badge: 'bg-slate-950 text-white',
+    frame:
+      'rounded-[1.75rem] border border-[#6a425c]/14 bg-white shadow-[0_18px_48px_rgba(38,39,26,0.07)] transition-transform duration-[280ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-[0_26px_60px_rgba(106,66,92,0.14)]',
+    muted: 'text-[#6a425c]',
+    title: 'text-[#26271a]',
+    badge: 'bg-[#6a425c] text-[#fffbe3]',
   },
   'editorial-feature': {
     frame: 'rounded-[1.8rem] border border-[rgba(125,83,45,0.12)] bg-[#fffaf3] shadow-[0_18px_55px_rgba(89,52,24,0.1)] hover:-translate-y-1 hover:shadow-[0_26px_75px_rgba(89,52,24,0.14)]',
@@ -119,23 +120,25 @@ export function TaskPostCard({
           cta: 'text-[#1f2617]',
         }
       : {
-          frame: 'rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_18px_44px_rgba(15,23,42,0.08)] hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(15,23,42,0.14)]',
-          badge: 'bg-slate-950 text-white',
-          muted: 'text-slate-600',
-          title: 'text-slate-950',
-          cta: 'text-slate-950',
+          frame:
+            'rounded-[1.65rem] border border-[#6a425c]/13 bg-white shadow-[0_16px_42px_rgba(38,39,26,0.07)] transition-transform duration-[280ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[3px] hover:shadow-[0_24px_52px_rgba(106,66,92,0.13)]',
+          badge: 'bg-[#6a425c] text-[#fffbe3]',
+          muted: 'text-[#6a425c]',
+          title: 'text-[#26271a]',
+          cta: 'text-[#6a425c]',
         }
 
     return (
-      <Link href={href} className={`group flex h-full flex-col overflow-hidden transition duration-300 ${cardTone.frame}`}>
-        <div className="relative aspect-[16/11] overflow-hidden bg-slate-100">
-          <ContentImage src={image} alt={altText} fill sizes={imageSizes} quality={75} className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" intrinsicWidth={960} intrinsicHeight={720} />
+      <Link href={href} className={`group flex h-full flex-col overflow-hidden ${cardTone.frame}`}>
+        <div className="relative aspect-[16/11] overflow-hidden bg-[#fffbe3]">
+          <ContentImage src={image} alt={altText} fill sizes={imageSizes} quality={75} className="object-cover transition-transform duration-500 [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.035]" intrinsicWidth={960} intrinsicHeight={720} />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#26271a]/25 via-transparent to-transparent opacity-90" />
           <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
             <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] ${cardTone.badge}`}>
               <Tag className="h-3.5 w-3.5" />
               {category}
             </span>
-            <span className="rounded-full bg-white/85 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-900">
+            <span className="rounded-full border border-white/40 bg-[#fffbe3]/92 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#26271a] shadow-sm backdrop-blur-[2px]">
               {variant === 'classified' ? 'Open now' : 'Verified'}
             </span>
           </div>

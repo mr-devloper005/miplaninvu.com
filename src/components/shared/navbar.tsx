@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Search, Menu, X, User, FileText, Building2, LayoutGrid, Tag, Image as ImageIcon, ChevronRight, Sparkles, MapPin, Plus } from 'lucide-react'
+import { Search, Menu, X, User, FileText, Building2, LayoutGrid, Tag, Image as ImageIcon, ChevronRight, Sparkles, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth-context'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
@@ -67,22 +67,27 @@ const variantClasses = {
 
 const directoryPalette = {
   'directory-clean': {
-    shell: 'border-b border-slate-200 bg-white/94 text-slate-950 shadow-[0_1px_0_rgba(15,23,42,0.04)] backdrop-blur-xl',
-    logo: 'rounded-2xl border border-slate-200 bg-slate-50',
-    nav: 'text-slate-600 hover:text-slate-950',
-    search: 'border border-slate-200 bg-slate-50 text-slate-600',
-    cta: 'bg-slate-950 text-white hover:bg-slate-800',
-    post: 'border border-slate-200 bg-white text-slate-950 hover:bg-slate-50',
-    mobile: 'border-t border-slate-200 bg-white',
+    shell:
+      'border border-[#ffa9a9]/45 bg-[#6a425c] text-[#fffbe3] shadow-[0_18px_50px_rgba(38,39,26,0.35)]',
+    logo: 'rounded-[1.15rem] border border-[#fffbe3]/30 bg-[#26271a]/35 shadow-inner',
+    nav: 'text-[#fffbe3]/88 hover:text-[#ffa9a9]',
+    navActive: 'text-[#ffa9a9]',
+    cta: 'bg-[#ffa9a9] text-[#26271a] shadow-[0_6px_22px_rgba(0,0,0,0.22)] hover:bg-[#ff9494]',
+    post: 'border border-[#fffbe3]/18 bg-[#fffbe3]/10 text-[#fffbe3] hover:bg-[#fffbe3]/18',
+    mobile: 'border-t border-[#ffa9a9]/25 bg-[#5a3a50]/98',
+    signIn: 'text-[#fffbe3] hover:bg-[#fffbe3]/12 hover:text-[#fffbe3]',
+    menuBtn: 'text-[#fffbe3] hover:bg-[#fffbe3]/10',
   },
   'market-utility': {
-    shell: 'border-b border-[#d7deca] bg-[#f4f6ef]/96 text-[#1f2617] shadow-[0_1px_0_rgba(64,76,34,0.06)] backdrop-blur-xl',
+    shell: 'border border-[#d7deca] bg-[#f4f6ef] text-[#1f2617] shadow-[0_14px_40px_rgba(64,76,34,0.12)]',
     logo: 'rounded-xl border border-[#d7deca] bg-white',
     nav: 'text-[#56604b] hover:text-[#1f2617]',
-    search: 'border border-[#d7deca] bg-white text-[#56604b]',
+    navActive: 'text-[#1f2617]',
     cta: 'bg-[#1f2617] text-[#edf5dc] hover:bg-[#2f3a24]',
     post: 'border border-[#d7deca] bg-white text-[#1f2617] hover:bg-[#eef2e4]',
-    mobile: 'border-t border-[#d7deca] bg-[#f4f6ef]',
+    mobile: 'border-t border-[#d7deca] bg-[#eef3e8]',
+    signIn: 'text-[#1f2617] hover:bg-[#1f2617]/8',
+    menuBtn: 'text-[#1f2617] hover:bg-black/5',
   },
 } as const
 
@@ -106,91 +111,100 @@ export function Navbar() {
     const palette = directoryPalette[(recipe.brandPack === 'market-utility' ? 'market-utility' : 'directory-clean') as keyof typeof directoryPalette]
 
     return (
-      <header className={cn('sticky top-0 z-50 w-full', palette.shell)}>
-        <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <div className="flex min-w-0 items-center gap-4">
-            <Link href="/" className="flex shrink-0 items-center gap-3">
-              <div className={cn('flex h-12 w-12 items-center justify-center overflow-hidden p-1.5', palette.logo)}>
-                <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
-              </div>
-              <div className="min-w-0 hidden sm:block">
-                <span className="block truncate text-xl font-semibold">{SITE_CONFIG.name}</span>
-                <span className="block text-[10px] uppercase tracking-[0.24em] opacity-60">{siteContent.navbar.tagline}</span>
-              </div>
-            </Link>
-
-            <div className="hidden items-center gap-5 xl:flex">
-              {primaryNavigation.slice(0, 4).map((task) => {
-                const isActive = pathname.startsWith(task.route)
-                return (
-                  <Link key={task.key} href={task.route} className={cn('text-sm font-semibold transition-colors', isActive ? 'text-foreground' : palette.nav)}>
-                    {task.label}
-                  </Link>
-                )
-              })}
-            </div>
-          </div>
-
-          <div className="hidden min-w-0 flex-1 items-center justify-center lg:flex">
-            <div className={cn('flex w-full max-w-xl items-center gap-3 rounded-full px-4 py-3', palette.search)}>
-              <Search className="h-4 w-4" />
-              <span className="text-sm">Find businesses, spaces, and local services</span>
-              <div className="ml-auto hidden items-center gap-1 text-xs opacity-75 md:flex">
-                <MapPin className="h-3.5 w-3.5" />
-                Local discovery
-              </div>
-            </div>
-          </div>
-
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            {primaryTask ? (
-              <Link href={primaryTask.route} className="hidden items-center gap-2 rounded-full border border-current/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] opacity-75 md:inline-flex">
-                <Sparkles className="h-3.5 w-3.5" />
-                {primaryTask.label}
+      <header className="sticky top-0 z-50 w-full pt-3 px-3 sm:px-5 sm:pt-4 lg:px-8">
+        <div className={cn('mx-auto max-w-7xl overflow-hidden rounded-2xl sm:rounded-3xl', palette.shell)}>
+          <nav className="mx-auto flex h-[4.25rem] max-w-7xl items-center justify-between gap-4 px-3 sm:h-20 sm:px-6">
+            <div className="flex min-w-0 flex-1 items-center gap-4 lg:gap-10">
+              <Link href="/" className="flex min-w-0 shrink-0 items-center gap-3">
+                <div className={cn('flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden p-1.5 sm:h-12 sm:w-12', palette.logo)}>
+                  <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
+                </div>
+                <div className="min-w-0 hidden sm:block">
+                  <span className="block truncate text-lg font-semibold text-[#fffbe3] sm:text-xl">{SITE_CONFIG.name}</span>
+                  <span className="block text-[10px] uppercase tracking-[0.24em] text-[#fffbe3]/55">{siteContent.navbar.tagline}</span>
+                </div>
               </Link>
-            ) : null}
 
-            {isAuthenticated ? (
-              <NavbarAuthControls />
-            ) : (
-              <div className="hidden items-center gap-2 md:flex">
-                <Button variant="ghost" size="sm" asChild className="rounded-full px-4">
-                  <Link href="/login">Sign In</Link>
-                </Button>
-                <Button size="sm" asChild className={cn('rounded-full', palette.cta)}>
-                  <Link href="/register">
-                    <Plus className="mr-1 h-4 w-4" />
-                    Add Listing
-                  </Link>
-                </Button>
+              <div className="hidden items-center gap-4 md:flex lg:gap-5">
+                {primaryNavigation.slice(0, 5).map((task) => {
+                  const isActive = pathname.startsWith(task.route)
+                  return (
+                    <Link
+                      key={task.key}
+                      href={task.route}
+                      className={cn('text-sm font-semibold transition-colors', isActive ? palette.navActive : palette.nav)}
+                    >
+                      {task.label}
+                    </Link>
+                  )
+                })}
               </div>
-            )}
-
-            <Button variant="ghost" size="icon" className="rounded-full lg:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
-          </div>
-        </nav>
-
-        {isMobileMenuOpen && (
-          <div className={palette.mobile}>
-            <div className="space-y-2 px-4 py-4">
-              <div className={cn('mb-3 flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium', palette.search)}>
-                <Search className="h-4 w-4" />
-                Find businesses, spaces, and services
-              </div>
-              {mobileNavigation.map((item) => {
-                const isActive = pathname.startsWith(item.href)
-                return (
-                  <Link key={item.name} href={item.href} onClick={() => setIsMobileMenuOpen(false)} className={cn('flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors', isActive ? 'bg-foreground text-background' : palette.post)}>
-                    <item.icon className="h-5 w-5" />
-                    {item.name}
-                  </Link>
-                )
-              })}
             </div>
-          </div>
-        )}
+
+            <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
+              {primaryTask ? (
+                <Link
+                  href={primaryTask.route}
+                  className="hidden items-center gap-2 rounded-full border border-[#fffbe3]/25 px-2.5 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#fffbe3]/90 sm:px-3 sm:text-xs md:inline-flex"
+                >
+                  <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#ffa9a9]" />
+                  {primaryTask.label}
+                </Link>
+              ) : null}
+
+              {isAuthenticated ? (
+                <NavbarAuthControls />
+              ) : (
+                <div className="hidden items-center gap-2 md:flex">
+                  <Button variant="ghost" size="sm" asChild className={cn('rounded-full px-4', palette.signIn)}>
+                    <Link href="/login">Sign In</Link>
+                  </Button>
+                  <Button size="sm" asChild className={cn('rounded-full font-semibold', palette.cta)}>
+                    <Link href="/register">
+                      <Plus className="mr-1 h-4 w-4" />
+                      Add Listing
+                    </Link>
+                  </Button>
+                </div>
+              )}
+
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn('rounded-full lg:hidden', palette.menuBtn)}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-expanded={isMobileMenuOpen}
+                aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+              >
+                {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </Button>
+            </div>
+          </nav>
+
+          {isMobileMenuOpen ? (
+            <div className={palette.mobile}>
+              <div className="space-y-2 px-3 py-4 sm:px-4">
+                {mobileNavigation.map((item) => {
+                  const isActive = pathname.startsWith(item.href)
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={cn(
+                        'flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors',
+                        isActive ? 'bg-[#ffa9a9] text-[#26271a]' : palette.post,
+                      )}
+                    >
+                      <item.icon className="h-5 w-5 shrink-0" />
+                      {item.name}
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          ) : null}
+        </div>
       </header>
     )
   }

@@ -86,15 +86,16 @@ function getDirectoryTone(brandPack: string) {
     }
   }
   return {
-    shell: 'bg-[#f8fbff] text-slate-950',
-    hero: 'bg-[linear-gradient(180deg,#eef6ff_0%,#ffffff_100%)]',
-    panel: 'border border-slate-200 bg-white shadow-[0_24px_64px_rgba(15,23,42,0.08)]',
-    soft: 'border border-slate-200 bg-slate-50',
-    muted: 'text-slate-600',
-    title: 'text-slate-950',
-    badge: 'bg-slate-950 text-white',
-    action: 'bg-slate-950 text-white hover:bg-slate-800',
-    actionAlt: 'border border-slate-200 bg-white text-slate-950 hover:bg-slate-100',
+    shell: 'bg-[#fffbe3] text-[#26271a]',
+    hero: 'relative overflow-hidden bg-[linear-gradient(135deg,#fffbe3_0%,#fff4f0_42%,#ffe8e8_100%)]',
+    panel:
+      'border border-[#6a425c]/15 bg-white/95 shadow-[0_20px_56px_rgba(38,39,26,0.08)] backdrop-blur-[2px]',
+    soft: 'border border-[#6a425c]/12 bg-[#fffbe3]/80',
+    muted: 'text-[#6a425c]/85',
+    title: 'text-[#26271a]',
+    badge: 'bg-[#6a425c] text-[#fffbe3]',
+    action: 'bg-[#6a425c] text-[#fffbe3] shadow-[0_8px_24px_rgba(106,66,92,0.25)] hover:bg-[#5a3850]',
+    actionAlt: 'border-2 border-[#ffa9a9] bg-white text-[#26271a] hover:bg-[#ffa9a9]/25',
   }
 }
 
@@ -158,28 +159,24 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
             <div>
               <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] ${tone.badge}`}>
                 <Compass className="h-3.5 w-3.5" />
-                Local discovery product
+                {siteContent.directoryHome.heroBadge}
               </span>
               <h1 className={`mt-6 max-w-4xl text-5xl font-semibold tracking-[-0.06em] sm:text-6xl ${tone.title}`}>
-                Search businesses, compare options, and act fast without digging through generic feeds.
+                {siteContent.directoryHome.heroTitle}
               </h1>
               <p className={`mt-6 max-w-2xl text-base leading-8 ${tone.muted}`}>{SITE_CONFIG.description}</p>
 
               <div className={`mt-8 grid gap-3 rounded-[2rem] p-4 ${tone.panel} md:grid-cols-[1.25fr_0.8fr_auto]`}>
-                <div className="rounded-full bg-black/5 px-4 py-3 text-sm">What do you need today?</div>
-                <div className="rounded-full bg-black/5 px-4 py-3 text-sm">Choose area or city</div>
+                <div className="rounded-full border border-[#6a425c]/10 bg-[#fffbe3]/90 px-4 py-3 text-sm text-[#6a425c]">{siteContent.directoryHome.heroPlaceholderA}</div>
+                <div className="rounded-full border border-[#6a425c]/10 bg-[#fffbe3]/90 px-4 py-3 text-sm text-[#6a425c]">{siteContent.directoryHome.heroPlaceholderB}</div>
                 <Link href={primaryTask?.route || '/listings'} className={`inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${tone.action}`}>
-                  Browse now
+                  {siteContent.directoryHome.heroCta}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                {[
-                  ['Verified businesses', `${featuredListings.length || 3}+ highlighted surfaces`],
-                  ['Fast scan rhythm', 'More utility, less filler'],
-                  ['Action first', 'Call, visit, shortlist, compare'],
-                ].map(([label, value]) => (
+                {siteContent.directoryHome.stats.map(({ label, value }) => (
                   <div key={label} className={`rounded-[1.4rem] p-4 ${tone.soft}`}>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.22em] opacity-70">{label}</p>
                     <p className="mt-2 text-lg font-semibold">{value}</p>
@@ -192,7 +189,7 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
               <div className={`rounded-[2rem] p-6 ${tone.panel}`}>
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] opacity-70">Primary lane</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] opacity-70">{siteContent.directoryHome.primaryLaneTitle}</p>
                     <h2 className="mt-2 text-3xl font-semibold">{primaryTask?.label || 'Listings'}</h2>
                   </div>
                   <ShieldCheck className="h-6 w-6" />
@@ -218,12 +215,14 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between gap-4 border-b border-border pb-6">
+        <div className="flex items-end justify-between gap-4 border-b border-[#6a425c]/12 pb-6">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">Featured businesses</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Strong listings with clearer trust cues.</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#6a425c]/75">{siteContent.directoryHome.featuredEyebrow}</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-[#26271a]">{siteContent.directoryHome.featuredHeading}</h2>
           </div>
-          <Link href="/listings" className="text-sm font-semibold text-primary hover:opacity-80">Open listings</Link>
+          <Link href="/listings" className="text-sm font-semibold text-[#6a425c] underline-offset-4 transition hover:text-[#26271a]">
+            {siteContent.directoryHome.featuredLink}
+          </Link>
         </div>
         <div className="mt-8 grid gap-6 lg:grid-cols-3">
           {featuredListings.map((post) => (
@@ -235,12 +234,12 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
       <section className={`${tone.shell}`}>
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8">
           <div className={`rounded-[2rem] p-7 ${tone.panel}`}>
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">What makes this different</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Built like a business directory, not a recolored content site.</h2>
-            <ul className={`mt-6 space-y-3 text-sm leading-7 ${tone.muted}`}>
-              <li>Search-first hero instead of a magazine headline.</li>
-              <li>Action-oriented listing cards with trust metadata.</li>
-              <li>Support lanes for offers, businesses, and profiles.</li>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">{siteContent.directoryHome.diffEyebrow}</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">{siteContent.directoryHome.diffHeading}</h2>
+            <ul className={`mt-6 list-inside list-disc space-y-3 text-sm leading-7 ${tone.muted}`}>
+              {siteContent.directoryHome.diffBullets.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
             </ul>
           </div>
           <div className="grid gap-4 md:grid-cols-2">

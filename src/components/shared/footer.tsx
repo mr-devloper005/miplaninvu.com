@@ -25,22 +25,18 @@ const footerLinks = {
   })),
   company: [
     { name: 'About', href: '/about' },
-    { name: 'Team', href: '/team' },
+    { name: 'Contact', href: '/contact' },
     { name: 'Careers', href: '/careers' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Press', href: '/press' },
   ],
   resources: [
-    { name: 'Help Center', href: '/help' },
-    { name: 'Community', href: '/community' },
-    { name: 'Developers', href: '/developers' },
+    { name: 'Help', href: '/help' },
+    { name: 'Search', href: '/search' },
     { name: 'Status', href: '/status' },
   ],
   legal: [
     { name: 'Privacy', href: '/privacy' },
     { name: 'Terms', href: '/terms' },
     { name: 'Cookies', href: '/cookies' },
-    { name: 'Licenses', href: '/licenses' },
   ],
 }
 
@@ -169,33 +165,74 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] text-slate-950">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr]">
-          <div>
-            <Link href="/" className="flex items-center gap-3">
-              <div className="h-11 w-11 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
-                <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="44" height="44" className="h-full w-full object-contain" />
-              </div>
-              <div>
-                <span className="block text-lg font-semibold">{SITE_CONFIG.name}</span>
-                <span className="text-xs uppercase tracking-[0.22em] text-slate-500">{siteContent.footer.tagline}</span>
-              </div>
-            </Link>
-            <p className="mt-5 max-w-sm text-sm leading-7 text-slate-600">{SITE_CONFIG.description}</p>
-          </div>
-          {(['platform', 'company', 'resources', 'legal'] as const).map((section) => (
-            <div key={section}>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">{section}</h3>
-              <ul className="mt-5 space-y-3 text-sm text-slate-600">
-                {footerLinks[section].map((item: any) => (
-                  <li key={item.name}><Link href={item.href} className="flex items-center gap-2 hover:text-slate-950">{item.icon ? <item.icon className="h-4 w-4" /> : null}{item.name}</Link></li>
-                ))}
-              </ul>
+    <footer className="relative mt-auto text-[#fffbe3]">
+      <div className="h-1.5 bg-[#ffa9a9]" aria-hidden />
+      <div className="relative overflow-hidden bg-[#6a425c]">
+        <div
+          className="pointer-events-none absolute -right-32 top-0 h-64 w-64 rounded-full bg-[#ffa9a9]/12 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -left-20 bottom-0 h-48 w-48 rounded-full bg-[#26271a]/25 blur-2xl"
+          aria-hidden
+        />
+        <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-12 lg:flex-row lg:items-stretch lg:justify-between lg:gap-16">
+            <div className="max-w-md lg:shrink-0">
+              <Link href="/" className="inline-flex items-center gap-3 rounded-xl ring-1 ring-[#fffbe3]/15 transition hover:ring-[#ffa9a9]/40">
+                <div className="h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-[#fffbe3] p-1">
+                  <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="44" height="44" className="h-full w-full object-contain" />
+                </div>
+                <div className="text-left">
+                  <span className="block font-display text-lg font-semibold tracking-tight text-[#fffbe3]">{SITE_CONFIG.name}</span>
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ffa9a9]">{siteContent.footer.tagline}</span>
+                </div>
+              </Link>
+              <p className="mt-5 text-sm leading-relaxed text-[#fffbe3]/75">{SITE_CONFIG.description}</p>
+              <p className="mt-4 inline-flex items-center rounded-full border border-[#ffa9a9]/35 bg-[#26271a]/20 px-3 py-1 text-xs font-medium tracking-wide text-[#ffa9a9]">
+                {SITE_CONFIG.domain}
+              </p>
             </div>
-          ))}
+
+            <div className="grid flex-1 grid-cols-2 gap-x-10 gap-y-10 sm:grid-cols-3 lg:max-w-xl">
+              {(['platform', 'company', 'resources'] as const).map((section) => (
+                <div key={section} className="relative pl-4 before:absolute before:left-0 before:top-1 before:h-[calc(100%-0.25rem)] before:w-px before:bg-gradient-to-b before:from-[#ffa9a9] before:via-[#fffbe3]/25 before:to-transparent">
+                  <h3 className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#ffa9a9]">{section}</h3>
+                  <ul className="mt-4 space-y-2.5 text-sm">
+                    {footerLinks[section].map((item: any) => (
+                      <li key={item.name}>
+                        <Link
+                          href={item.href}
+                          className="group inline-flex items-center gap-2 text-[#fffbe3]/88 transition-colors hover:text-[#ffa9a9]"
+                        >
+                          {item.icon ? (
+                            <item.icon className="h-3.5 w-3.5 shrink-0 text-[#ffa9a9]/70 group-hover:text-[#ffa9a9]" aria-hidden />
+                          ) : null}
+                          <span className="border-b border-transparent group-hover:border-[#ffa9a9]/50">{item.name}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="mt-12 border-t border-slate-200 pt-6 text-center text-sm text-slate-500">&copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.</div>
+      </div>
+
+      <div className="border-t border-[#fffbe3]/10 bg-[#26271a] px-4 py-5 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 text-xs text-[#fffbe3]/55 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[#fffbe3]/70">
+            &copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.
+          </p>
+          <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Legal">
+            {footerLinks.legal.map((item) => (
+              <Link key={item.name} href={item.href} className="text-[#fffbe3]/60 transition hover:text-[#ffa9a9]">
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+        </div>
       </div>
     </footer>
   )

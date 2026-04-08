@@ -7,7 +7,7 @@ import { SchemaJsonLd } from '@/components/seo/schema-jsonld'
 import { fetchTaskPosts } from '@/lib/task-data'
 import { SITE_CONFIG, getTaskConfig, type TaskKey } from '@/lib/site-config'
 import { CATEGORY_OPTIONS, normalizeCategory } from '@/lib/categories'
-import { taskIntroCopy } from '@/config/site.content'
+import { siteContent, taskIntroCopy } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 
 const taskIcons: Record<TaskKey, any> = {
@@ -24,7 +24,8 @@ const taskIcons: Record<TaskKey, any> = {
 }
 
 const variantShells = {
-  'listing-directory': 'bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.08),transparent_24%),linear-gradient(180deg,#f8fbff_0%,#ffffff_100%)]',
+  'listing-directory':
+    'bg-[radial-gradient(ellipse_90%_70%_at_0%_-10%,rgba(255,169,169,0.2),transparent_48%),radial-gradient(ellipse_70%_50%_at_100%_0%,rgba(106,66,92,0.09),transparent_42%),linear-gradient(180deg,#fffbe3_0%,#fffaf5_45%,#ffffff_100%)]',
   'listing-showcase': 'bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)]',
   'article-editorial': 'bg-[radial-gradient(circle_at_top_left,rgba(251,191,36,0.08),transparent_20%),linear-gradient(180deg,#fff8ef_0%,#ffffff_100%)]',
   'article-journal': 'bg-[linear-gradient(180deg,#fffdf9_0%,#f7f1ea_100%)]',
@@ -73,11 +74,11 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
           button: 'bg-[#2f1d16] text-[#fff4e4] hover:bg-[#452920]',
         }
       : {
-          muted: 'text-slate-600',
-          panel: 'border border-slate-200 bg-white',
-          soft: 'border border-slate-200 bg-slate-50',
-          input: 'border border-slate-200 bg-white text-slate-950',
-          button: 'bg-slate-950 text-white hover:bg-slate-800',
+          muted: 'text-[#6a425c]',
+          panel: 'border border-[#6a425c]/14 bg-white/95 shadow-[0_20px_56px_rgba(38,39,26,0.06)] backdrop-blur-[1px]',
+          soft: 'border border-[#6a425c]/14 bg-[#fffbe3]/75',
+          input: 'border border-[#6a425c]/18 bg-white text-[#26271a] shadow-[inset_0_1px_2px_rgba(38,39,26,0.04)]',
+          button: 'bg-[#6a425c] text-[#fffbe3] shadow-[0_8px_22px_rgba(106,66,92,0.2)] hover:bg-[#5a3850]',
         }
 
   return (
@@ -116,27 +117,59 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
         ) : null}
 
         {layoutKey === 'listing-directory' || layoutKey === 'listing-showcase' ? (
-          <section className="mb-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-            <div className={`rounded-[2rem] p-7 shadow-[0_24px_70px_rgba(15,23,42,0.07)] ${ui.panel}`}>
-              <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] opacity-70"><Icon className="h-4 w-4" /> {taskConfig?.label || task}</div>
-              <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-foreground">{taskConfig?.description || 'Latest posts'}</h1>
-              <p className={`mt-4 max-w-2xl text-sm leading-7 ${ui.muted}`}>Built with a cleaner scan rhythm, stronger metadata grouping, and a structure designed for business discovery rather than editorial reading.</p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link href={taskConfig?.route || '#'} className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${ui.button}`}>Explore results <ArrowRight className="h-4 w-4" /></Link>
-                <Link href="/search" className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${ui.soft}`}>Open search</Link>
+          <section className="mb-10 border-b border-[#6a425c]/12 pb-8">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6a425c]/75">{SITE_CONFIG.domain}</p>
+            <div className="mt-2 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#6a425c]/70">
+                  <Icon className="h-4 w-4" aria-hidden />
+                  {taskConfig?.label || task}
+                </div>
+                <h1 className="mt-2 font-display text-3xl font-semibold tracking-[-0.03em] text-[#26271a] sm:text-4xl">{taskConfig?.label || 'Listings'}</h1>
+                <p className={`mt-2 max-w-2xl text-sm leading-relaxed sm:text-[0.9375rem] ${ui.muted}`}>{taskConfig?.description}</p>
+                {task === 'listing' ? (
+                  <p className={`mt-3 max-w-2xl text-sm leading-relaxed ${ui.muted}`}>{siteContent.listingPage.lead}</p>
+                ) : null}
+              </div>
+              <div className="flex shrink-0 flex-wrap gap-2 sm:justify-end">
+                <Link
+                  href={taskConfig?.route || '#'}
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold ${ui.button}`}
+                >
+                  {siteContent.listingPage.exploreCta}
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </Link>
+                <Link href="/search" className={`inline-flex items-center gap-2 rounded-full border border-[#6a425c]/18 px-4 py-2.5 text-sm font-semibold ${ui.soft}`}>
+                  {siteContent.listingPage.searchCta}
+                </Link>
               </div>
             </div>
-            <form className={`grid gap-3 rounded-[2rem] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] ${ui.soft}`} action={taskConfig?.route || '#'}>
-              <div>
-                <label className={`text-xs uppercase tracking-[0.2em] ${ui.muted}`}>Category</label>
-                <select name="category" defaultValue={normalizedCategory} className={`mt-2 h-11 w-full rounded-xl px-3 text-sm ${ui.input}`}>
+
+            <form
+              className={`mt-8 flex flex-col gap-3 rounded-2xl border border-[#6a425c]/12 bg-white/80 p-4 sm:flex-row sm:flex-wrap sm:items-end sm:gap-4`}
+              action={taskConfig?.route || '#'}
+            >
+              <div className="min-w-[200px] flex-1 sm:max-w-xs">
+                <label htmlFor="listing-category" className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${ui.muted}`}>
+                  {siteContent.listingPage.filterLabel}
+                </label>
+                <select
+                  id="listing-category"
+                  name="category"
+                  defaultValue={normalizedCategory}
+                  className={`mt-1.5 h-11 w-full rounded-xl px-3 text-sm ${ui.input}`}
+                >
                   <option value="all">All categories</option>
                   {CATEGORY_OPTIONS.map((item) => (
-                    <option key={item.slug} value={item.slug}>{item.name}</option>
+                    <option key={item.slug} value={item.slug}>
+                      {item.name}
+                    </option>
                   ))}
                 </select>
               </div>
-              <button type="submit" className={`h-11 rounded-xl text-sm font-medium ${ui.button}`}>Apply filters</button>
+              <button type="submit" className={`h-11 shrink-0 rounded-xl px-6 text-sm font-semibold ${ui.button}`}>
+                {siteContent.listingPage.filterSubmit}
+              </button>
             </form>
           </section>
         ) : null}
@@ -232,7 +265,7 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
           </section>
         ) : null}
 
-        {intro ? (
+        {intro && task !== 'listing' ? (
           <section className={`mb-12 rounded-[2rem] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] sm:p-8 ${ui.panel}`}>
             <h2 className="text-2xl font-semibold text-foreground">{intro.title}</h2>
             {intro.paragraphs.map((paragraph) => (
@@ -246,7 +279,7 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
           </section>
         ) : null}
 
-        <TaskListClient task={task} initialPosts={posts} category={normalizedCategory} />
+        <TaskListClient task={task} initialPosts={posts} category={normalizedCategory} className={task === 'listing' ? 'lg:grid-cols-3' : undefined} />
       </main>
       <Footer />
     </div>

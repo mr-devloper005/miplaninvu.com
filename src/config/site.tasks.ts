@@ -3,7 +3,7 @@ export const siteTaskDefinitions = [
     key: 'listing',
     label: 'Business Listings',
     route: '/listings',
-    description: 'Verified businesses and services.',
+    description: 'Discover verified businesses, services, and places curated for miplaninvu.com visitors.',
     contentType: 'listing',
     enabled: true,
   },
