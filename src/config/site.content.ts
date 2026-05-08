@@ -2,49 +2,49 @@ import type { TaskKey } from '@/lib/site-config'
 
 export const siteContent = {
   navbar: {
-    tagline: 'miplaninvu.com · trusted listings',
+    tagline: 'trusted listings',
   },
   footer: {
     tagline: 'Top-rated directory',
   },
   /** Copy for the directory-style homepage (`DirectoryHome` in `page.tsx`) */
   directoryHome: {
-    heroBadge: 'miplaninvu.com listings',
+    heroBadge: 'discover',
     heroTitle: 'Find top-rated businesses and services without the noise.',
     heroPlaceholderA: 'What are you looking for?',
     heroPlaceholderB: 'City or area',
     heroCta: 'Browse listings',
     stats: [
-      { label: 'Trusted directory', value: 'miplaninvu.com' },
+      { label: 'Trusted directory', value: 'Listings' },
       { label: 'Built to scan', value: 'Clear cards & details' },
       { label: 'Made for action', value: 'Call, visit, compare' },
     ],
     primaryLaneTitle: 'Primary lane',
-    featuredEyebrow: 'Featured on miplaninvu.com',
+    featuredEyebrow: 'Featured listings',
     featuredHeading: 'Listings visitors rely on.',
     featuredLink: 'View all listings',
-    diffEyebrow: 'Why miplaninvu.com',
+    diffEyebrow: 'Why this directory',
     diffHeading: 'A listing site built for real discovery—not generic feeds.',
     diffBullets: [
       'Curated business profiles with location and contact details up front.',
       'Cards designed for quick scanning on phone or desktop.',
-      'One home for miplaninvu.com’s top-rated directory experience.',
+      'One home for the top-rated directory experience.',
     ],
   },
   /** Listings index (`/listings`) hero when layout is `listing-directory` */
   listingPage: {
     lead:
-      'Search and filter the miplaninvu.com directory—verified-style listings with categories, summaries, and the details you need to choose with confidence.',
+      'Search and filter the directory—verified-style listings with categories, summaries, and the details you need to choose with confidence.',
     exploreCta: 'Scroll listings',
     searchCta: 'Site search',
     filterLabel: 'Category',
     filterSubmit: 'Apply',
   },
   hero: {
-    badge: 'miplaninvu.com',
+    badge: 'listings',
     title: ['Top-rated', 'business listings.'],
     description:
-      'Browse trusted businesses and services on miplaninvu.com—structured listings, clear metadata, and a directory built for fast decisions.',
+      'Browse trusted businesses and services—structured listings, clear metadata, and a directory built for fast decisions.',
     primaryCta: {
       label: 'Open listings',
       href: '/listings',
@@ -53,36 +53,34 @@ export const siteContent = {
       label: 'Search the site',
       href: '/search',
     },
-    searchPlaceholder: 'Search miplaninvu.com listings and pages',
+    searchPlaceholder: 'Search listings and pages',
     focusLabel: 'Category',
     featureCardBadge: 'Featured listings',
-    featureCardTitle: 'Fresh listings shape what visitors see first on miplaninvu.com.',
+    featureCardTitle: 'Fresh listings shape what visitors see first.',
     featureCardDescription:
       'New and highlighted businesses stay visible so the directory stays useful for people browsing on any device.',
   },
   home: {
     metadata: {
-      title: 'miplaninvu.com — top-rated business listings',
+      title: 'top-rated business listings',
       description:
-        'miplaninvu.com is a top-rated listing site for discovering verified businesses, services, and local spots—browse categories, compare options, and act with confidence.',
-      openGraphTitle: 'miplaninvu.com — business listings directory',
+        'A top-rated listing site for discovering verified businesses, services, and local spots—browse categories, compare options, and act with confidence.',
+      openGraphTitle: 'business listings directory',
       openGraphDescription:
-        'Find and compare top-rated listings on miplaninvu.com. Clear profiles, categories, and trust cues in one place.',
+        'Find and compare top-rated listings. Clear profiles, categories, and trust cues in one place.',
       keywords: [
-        'miplaninvu',
-        'miplaninvu.com',
         'business listings',
         'top rated listings',
         'local directory',
         'verified businesses',
       ],
     },
-    introBadge: 'About miplaninvu.com',
+    introBadge: 'About the directory',
     introTitle: 'The listing directory built for people who want clarity, not clutter.',
     introParagraphs: [
-      'miplaninvu.com focuses on business listings first—so owners get a proper profile and visitors get the facts they need in seconds.',
+      'The directory focuses on business listings first—so owners get a proper profile and visitors get the facts they need in seconds.',
       'Whether you are choosing a service, a place to visit, or a brand to trust, the site keeps scanning fast and details easy to compare.',
-      'This is the public home of the miplaninvu.com directory experience: structured listings, consistent cards, and navigation that stays out of your way.',
+      'This is the public home of the directory experience: structured listings, consistent cards, and navigation that stays out of your way.',
     ],
     sideBadge: 'At a glance',
     sidePoints: [
@@ -96,15 +94,15 @@ export const siteContent = {
       href: '/listings',
     },
     secondaryLink: {
-      label: 'Search miplaninvu.com',
+      label: 'Search the site',
       href: '/search',
     },
   },
   cta: {
-    badge: 'List on miplaninvu.com',
+    badge: 'List your business',
     title: 'Reach people who are actively looking for businesses like yours.',
     description:
-      'Add or manage your listing on miplaninvu.com so customers find accurate hours, services, and contact information in our top-rated directory.',
+      'Add or manage your listing so customers find accurate hours, services, and contact information in our top-rated directory.',
     primaryCta: {
       label: 'Create an account',
       href: '/register',
@@ -115,7 +113,7 @@ export const siteContent = {
     },
   },
   taskSectionHeading: 'Latest {label}',
-  taskSectionDescriptionSuffix: 'New and updated entries on miplaninvu.com.',
+  taskSectionDescriptionSuffix: 'New and updated entries.',
 } as const
 
 export const taskPageMetadata: Record<Exclude<TaskKey, 'comment' | 'org' | 'social'>, { title: string; description: string }> = {
@@ -124,9 +122,9 @@ export const taskPageMetadata: Record<Exclude<TaskKey, 'comment' | 'org' | 'soci
     description: 'Read articles, stories, guides, and long-form posts across topics and interests.',
   },
   listing: {
-    title: 'Business listings — miplaninvu.com',
+    title: 'Business listings',
     description:
-      'Browse the miplaninvu.com directory: top-rated style listings with categories, summaries, and the details you need to pick the right business.',
+      'Browse the directory: top-rated style listings with categories, summaries, and the details you need to pick the right business.',
   },
   classified: {
     title: 'Classifieds and announcements',
@@ -155,11 +153,11 @@ export const taskIntroCopy: Record<
   { title: string; paragraphs: string[]; links: { label: string; href: string }[] }
 > = {
   listing: {
-    title: 'About listings on miplaninvu.com',
+    title: 'About business listings',
     paragraphs: [
-      'Each listing on miplaninvu.com is structured so you can see category, summary, and contact-style details at a glance—ideal when you are comparing local businesses or services.',
+      'Each listing is structured so you can see category, summary, and contact-style details at a glance—ideal when you are comparing local businesses or services.',
       'Use categories to narrow the directory, then open a profile for full information. The site is built for scanning first, so you spend less time hunting for basics.',
-      'miplaninvu.com is maintained as a top-rated listing experience: clear cards, consistent fields, and navigation that keeps you moving toward the right choice.',
+      'The directory is maintained as a top-rated listing experience: clear cards, consistent fields, and navigation that keeps you moving toward the right choice.',
     ],
     links: [
       { label: 'Site search', href: '/search' },
