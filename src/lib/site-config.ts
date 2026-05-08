@@ -53,8 +53,6 @@ export const SITE_CONFIG: SiteConfig = {
     titleTemplate: `%s | ${siteIdentity.name}`,
     description: siteIdentity.description,
     keywords: [
-      'miplaninvu',
-      'miplaninvu.com',
       'business listings',
       'top rated listings',
       'local business directory',

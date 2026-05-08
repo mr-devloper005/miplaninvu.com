@@ -4,28 +4,32 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { SITE_CONFIG } from "@/lib/site-config";
+import { siteContent } from "@/config/site.content";
 
-const highlights = [
-  { label: "Creators onboarded", value: "12k+" },
-  { label: "Bookmarks shared", value: "180k" },
-  { label: "Listings published", value: "8.6k" },
-];
-
-const values = [
-  { title: "Curated by people", description: "We believe trusted recommendations beat endless feeds." },
-  { title: "Designed for focus", description: "Clear, calm UI helps you find the next best resource fast." },
-  { title: "Built to share", description: "Collections make collaboration and knowledge flow effortless." },
+const features = [
+  { 
+    title: "Trusted Directory", 
+    description: "The directory focuses on business listings first—so owners get a proper profile and visitors get the facts they need in seconds." 
+  },
+  { 
+    title: "Built for Scanning", 
+    description: "Whether you are choosing a service, a place to visit, or a brand to trust, the site keeps scanning fast and details easy to compare." 
+  },
+  { 
+    title: "Clear Navigation", 
+    description: "This is the public home of the directory experience: structured listings, consistent cards, and navigation that stays out of your way." 
+  },
 ];
 
 export default function AboutPage() {
   return (
     <PageShell
       title={`About ${SITE_CONFIG.name}`}
-      description={`${SITE_CONFIG.name} is a modern platform for creators, communities, and curated business discovery.`}
+      description={`${SITE_CONFIG.name} is a top-rated listing site for discovering verified businesses, services, and local spots.`}
       actions={
         <>
           <Button variant="outline" asChild>
-            <Link href="/team">Meet the Team</Link>
+            <Link href="/listings">Browse Listings</Link>
           </Button>
           <Button asChild>
             <Link href="/contact">Contact Us</Link>
@@ -33,37 +37,50 @@ export default function AboutPage() {
         </>
       }
     >
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="space-y-8">
         <Card className="border-border bg-card">
-          <CardContent className="space-y-4 p-6">
-            <Badge variant="secondary">Our Story</Badge>
-            <h2 className="text-2xl font-semibold text-foreground">
-              A single home for knowledge, discovery, and community.
+          <CardContent className="space-y-6 p-6">
+            <Badge variant="secondary">About the directory</Badge>
+            <h2 className="text-3xl font-semibold text-foreground">
+              The listing directory built for people who want clarity, not clutter.
             </h2>
-            <p className="text-sm text-muted-foreground">
-              {SITE_CONFIG.name} brings together publishing, listings, and social bookmarking so teams can move faster
-              and keep their best resources close.
-            </p>
-            <div className="grid gap-4 sm:grid-cols-3">
-              {highlights.map((item) => (
-                <div key={item.label} className="rounded-lg border border-border bg-secondary/40 p-4">
-                  <div className="text-2xl font-semibold text-foreground">{item.value}</div>
-                  <div className="text-xs text-muted-foreground">{item.label}</div>
-                </div>
-              ))}
+            <div className="space-y-4 text-sm text-muted-foreground">
+              <p>
+                {SITE_CONFIG.name} focuses on business listings first—so owners get a proper profile and visitors get the facts they need in seconds.
+              </p>
+              <p>
+                Whether you are choosing a service, a place to visit, or a brand to trust, the site keeps scanning fast and details easy to compare.
+              </p>
+              <p>
+                This is the public home of the directory experience: structured listings, consistent cards, and navigation that stays out of your way.
+              </p>
             </div>
           </CardContent>
         </Card>
-        <div className="space-y-4">
-          {values.map((value) => (
-            <Card key={value.title} className="border-border bg-card">
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {features.map((feature) => (
+            <Card key={feature.title} className="border-border bg-card">
               <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-foreground">{value.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{value.description}</p>
+                <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{feature.description}</p>
               </CardContent>
             </Card>
           ))}
         </div>
+
+        <Card className="border-border bg-card">
+          <CardContent className="space-y-4 p-6">
+            <Badge variant="secondary">At a glance</Badge>
+            <h3 className="text-xl font-semibold text-foreground">Key Features</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Top-rated listing presentation with strong trust and location cues.</li>
+              <li>• Category-friendly browsing aligned with how people search locally.</li>
+              <li>• Built for mobile scanning and quick jumps to contact or map info.</li>
+              <li>• A focused alternative to noisy social feeds and generic search results.</li>
+            </ul>
+          </CardContent>
+        </Card>
       </div>
     </PageShell>
   );
