@@ -1,9 +1,14 @@
+'use client'
+
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles } from 'lucide-react'
 import { NavbarShell } from '@/components/shared/navbar-shell'
 import { Footer } from '@/components/shared/footer'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind } from '@/design/factory/get-product-kind'
+import { useAuth } from '@/lib/auth-context'
+import { useState } from 'react'
 
 function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
   if (kind === 'directory') {
@@ -14,8 +19,8 @@ function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
       muted: 'text-slate-600',
       action: 'bg-slate-950 text-white hover:bg-slate-800',
       icon: Building2,
-      title: 'Access your business dashboard',
-      body: 'Manage listings, verification details, contact info, and local discovery surfaces from one place.',
+      title: 'Manage your business listing',
+      body: 'Update your business information, respond to customer inquiries, and track your listing performance.',
     }
   }
   if (kind === 'editorial') {
@@ -26,8 +31,8 @@ function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
       muted: 'text-[#6e5547]',
       action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
       icon: FileText,
-      title: 'Sign in to your publication workspace',
-      body: 'Draft, review, and publish long-form work with the calmer reading system intact.',
+      title: 'Access your business profile',
+      body: 'Manage your business profile, update information, and connect with customers in our directory.',
     }
   }
   if (kind === 'visual') {
@@ -38,8 +43,8 @@ function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
       muted: 'text-slate-300',
       action: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
       icon: ImageIcon,
-      title: 'Enter the creator workspace',
-      body: 'Open your visual feed, creator profile, and publishing tools without dropping into a generic admin shell.',
+      title: 'Manage your visual business profile',
+      body: 'Update photos, manage your business gallery, and maintain your visual presence in the directory.',
     }
   }
   return {
@@ -49,8 +54,8 @@ function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
     muted: 'text-[#71574a]',
     action: 'bg-[#5b2b3b] text-[#fff0f5] hover:bg-[#74364b]',
     icon: Bookmark,
-    title: 'Open your curated collections',
-    body: 'Manage saved resources, collection notes, and curator identity from a calmer workspace.',
+    title: 'Access your business dashboard',
+    body: 'Manage your business listings, saved searches, and directory preferences from your dashboard.',
   }
 }
 
@@ -59,6 +64,29 @@ export default function LoginPage() {
   const productKind = getProductKind(recipe)
   const config = getLoginConfig(productKind)
   const Icon = config.icon
+  const { login, isLoading } = useAuth()
+  const router = useRouter()
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      await login(formData.email, formData.password)
+      router.push('/')
+    } catch (error) {
+      console.error('Login failed:', error)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
 
   return (
     <div className={`min-h-screen ${config.shell}`}>
@@ -78,10 +106,32 @@ export default function LoginPage() {
 
           <div className={`rounded-[2rem] p-8 ${config.panel}`}>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Welcome back</p>
-            <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Password" type="password" />
-              <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action}`}>Sign in</button>
+            <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
+              <input 
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" 
+                placeholder="Email address" 
+                required 
+              />
+              <input 
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" 
+                placeholder="Password" 
+                required 
+              />
+              <button 
+                type="submit" 
+                disabled={isLoading}
+                className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${config.action} ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                {isLoading ? 'Signing in...' : 'Sign in'}
+              </button>
             </form>
             <div className={`mt-6 flex items-center justify-between text-sm ${config.muted}`}>
               <Link href="/forgot-password" className="hover:underline">Forgot password?</Link>

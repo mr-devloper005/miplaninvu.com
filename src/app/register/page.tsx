@@ -14,8 +14,8 @@ function getRegisterConfig(kind: ReturnType<typeof getProductKind>) {
       muted: 'text-slate-600',
       action: 'bg-slate-950 text-white hover:bg-slate-800',
       icon: Building2,
-      title: 'Create a business-ready account',
-      body: 'List services, manage locations, and activate trust signals with a proper directory workflow.',
+      title: 'List your business on our directory',
+      body: 'Create an account to add your business listing, manage your profile, and connect with customers looking for trusted services.',
     }
   }
   if (kind === 'editorial') {
@@ -26,8 +26,8 @@ function getRegisterConfig(kind: ReturnType<typeof getProductKind>) {
       muted: 'text-[#6e5547]',
       action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
       icon: FileText,
-      title: 'Start your contributor workspace',
-      body: 'Create a profile for essays, issue drafts, editorial review, and publication scheduling.',
+      title: 'Join our business community',
+      body: 'Create a profile to share your business story, connect with customers, and showcase your services.',
     }
   }
   if (kind === 'visual') {
@@ -38,8 +38,8 @@ function getRegisterConfig(kind: ReturnType<typeof getProductKind>) {
       muted: 'text-slate-300',
       action: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
       icon: ImageIcon,
-      title: 'Set up your creator profile',
-      body: 'Launch a visual-first account with gallery publishing, identity surfaces, and profile-led discovery.',
+      title: 'Showcase your business visually',
+      body: 'Create a visually appealing business profile with photos, gallery, and rich media to attract more customers.',
     }
   }
   return {
@@ -49,8 +49,8 @@ function getRegisterConfig(kind: ReturnType<typeof getProductKind>) {
     muted: 'text-[#71574a]',
     action: 'bg-[#5b2b3b] text-[#fff0f5] hover:bg-[#74364b]',
     icon: Bookmark,
-    title: 'Create a curator account',
-    body: 'Build shelves, save references, and connect collections to your profile without a generic feed setup.',
+    title: 'Create your business profile',
+    body: 'Build your business presence, save favorite listings, and manage your directory experience.',
   }
 }
 
